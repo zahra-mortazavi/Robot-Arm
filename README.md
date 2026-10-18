@@ -348,5 +348,11 @@ The media in this README is **already included** in the repository-ready `docs/`
 Possible next steps include automated tracking-error benchmarks across controllers, persisted RL policies, visible training progress, controller-parameter controls in the UI, stronger inverse-kinematics and reachability validation, improved CSV export, unit tests, and a physically grounded torque-level dynamics model.
 
 ---
+## Academic Context
 
-**Project scope:** Educational simulation of a planar 3-DOF robot arm, showcasing the progression from kinematic control in **V1** to additional learning-based and dynamic-style control experiments in **V2**.
+Developed as part of the **Fundamentals of Robotics** course.
+
+📅 **Spring 2026**
+---
+
+
