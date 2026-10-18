@@ -11,10 +11,9 @@ This repository contains **two independent versions** of the same educational ro
 
 The project is a **2D software simulation**, not a physical robot controller or a full rigid-body dynamics engine. It uses only the Java standard library; no third-party packages, build framework, or robotic hardware are required.
 
-> **📸 Main project demo — add:** `docs/media/v2-overview.gif`  
-> Record a short V2 simulation showing the arm tracking a line or circle, with the target path, actual trail, and live data tables visible. Place the GIF immediately below this introduction once it is available.
->
-> <!-- After adding the file, replace this note with: ![V2 simulator demo](docs/media/v2-overview.gif) -->
+![V2 circular-trajectory demo](docs/media/v2-overview.gif)
+
+*Real frames captured from the running V2 Java Swing simulator: circular-path tracking.*
 
 ## Contents
 
@@ -28,7 +27,7 @@ The project is a **2D software simulation**, not a physical robot controller or 
 - [CSV data logging (V2)](#csv-data-logging-v2)
 - [Project structure](#project-structure)
 - [Implementation notes and limitations](#implementation-notes-and-limitations)
-- [Suggested images to add](#suggested-images-to-add)
+- [Included screenshots, diagram and GIFs](#included-screenshots-diagram-and-gifs)
 - [Future improvements](#future-improvements)
 - [License](#license)
 
@@ -79,24 +78,15 @@ The project is a **2D software simulation**, not a physical robot controller or 
 
 ### V1 — Original simulator
 
-> **📸 Add:** `docs/images/v1-simulator.png`  
-> Capture the V1 simulation window with a visible target path, robot pose, motion trail, and the telemetry tables on the right.
->
-> <!-- Replace this note with: ![V1 simulator](docs/images/v1-simulator.png) -->
+![V1 — Jacobian-based tracking with live telemetry](docs/images/v1-simulator.png)
 
 ### V2 — Extended simulator
 
-> **📸 Add:** `docs/images/v2-simulator.png`  
-> Capture the full V2 simulator, preferably in Automatic or Dynamic_Automatic mode with a clear path and trail.
->
-> <!-- Replace this note with: ![V2 simulator](docs/images/v2-simulator.png) -->
+![V2 — circular tracking and live telemetry](docs/images/v2-simulator.png)
 
 ### Configuration screen
 
-> **📸 Add:** `docs/images/configuration.png`  
-> Show the configuration wizard with the link-length, joint-limit, mode, and path settings. A side-by-side image of steps 1 and 2 would be especially useful.
->
-> <!-- Replace this note with: ![Robot configuration](docs/images/configuration.png) -->
+![Robot configuration — link lengths, joint limits and trajectory parameters](docs/images/configuration.png)
 
 ## Getting started
 
@@ -172,10 +162,7 @@ For an automatic mode, press **Next**, choose **Line** or **Circle**, enter its 
 
 **Circle:** Specify center `(CX, CY)` and radius `R`. The defaults are `(1.5, 1.0), R = 0.7` in V1 and `(1.5, 1.5), R = 0.7` in V2.
 
-> **📸 Add:** `docs/images/line-vs-circle.png`  
-> Put a line-tracking screenshot next to a circle-tracking screenshot, ideally captured with the same arm configuration.
->
-> <!-- Replace this note with: ![Line and circle path tracking](docs/images/line-vs-circle.png) -->
+![Line and circle trajectory tracking in V2](docs/images/line-vs-circle.png)
 
 ### 3. Operate the robot
 
@@ -191,10 +178,9 @@ For an automatic mode, press **Next**, choose **Line** or **Circle**, enter its 
 
 Each V2 manual button/key press changes the corresponding angle by **0.05 radians** (about 2.86°), subject to the configured joint limits.
 
-> **📸 Add:** `docs/images/manual-controls.png`  
-> Show V2's mini-robot drag area, shortcut labels, and the six joint-control buttons together.
->
-> <!-- Replace this note with: ![V2 manual controls](docs/images/manual-controls.png) -->
+![V2 manual joint controls and end-effector dragging area](docs/images/manual-controls.png)
+
+![Real manual-mode motion produced with the V2 joint-control buttons](docs/media/manual-motion.gif)
 
 **Automatic modes:** The robot attempts to reach the starting point and then advance along the selected path. The orange curve/line represents the target; the colored trail shows where the end effector actually traveled. Trajectory advancement depends on reaching a controller-specific distance threshold, so a difficult configuration may move slowly or stall.
 
@@ -243,10 +229,7 @@ The current training setup uses **20,000 episodes**, up to **100 steps per episo
 
 **Implementation:** [`Robot_V2/src/RLController.java`](Robot_V2/src/RLController.java).
 
-> **📸 Add:** `docs/images/rl-training.png`  
-> Show V2's training dialog. An optional short video/GIF of the resulting RL path tracking is more informative than the dialog alone.
->
-> <!-- Replace this note with: ![RL agent training](docs/images/rl-training.png) -->
+![V2 RL agent training dialog](docs/images/rl-training.png)
 
 ### Dynamic_Automatic — PID-inspired tracking (V2)
 
@@ -264,10 +247,7 @@ This is a **sampled, heuristic feasibility check**, not a mathematical proof of 
 
 **Implementation:** [`Robot_V2/src/ReachabilityChecker.java`](Robot_V2/src/ReachabilityChecker.java).
 
-> **📸 Add:** `docs/images/reachability-error.png`  
-> Use an intentionally unreachable line/circle to capture the error dialog and highlight V2's detailed failure message.
->
-> <!-- Replace this note with: ![Reachability diagnostic](docs/images/reachability-error.png) -->
+![V2 sampled reachability validation error](docs/images/reachability-error.png)
 
 ## Mathematical model
 
@@ -291,10 +271,7 @@ $$
 
 Here, `J(θ)` is the **2 × 3** planar manipulator Jacobian calculated from the derivatives of the forward-kinematics equations. Angles are handled internally in **radians**. Link lengths and Cartesian positions use the **same arbitrary length unit** (for example, meters if you interpret the link lengths in meters).
 
-> **📸 Add:** `docs/images/robot-kinematics.png`  
-> Create a clean planar-arm diagram labeling the base, `A₁`–`A₃`, `θ₁`–`θ₃`, the X/Y axes, and the end-effector position `(x, y)`.
->
-> <!-- Replace this note with: ![Three-link planar arm kinematics](docs/images/robot-kinematics.png) -->
+![Three-link planar arm kinematics — link lengths and relative joint angles](docs/images/robot-kinematics.png)
 
 ## CSV data logging (V2)
 
@@ -354,9 +331,9 @@ The repository already contains one example recording: [`Robot_V2/robot_data_202
 │   ├── joint1.png, joint2.png, joint3.png, earth.png
 │   ├── Robot.png
 │   └── robot_data_20260713_222537.csv  # Example output
-└── docs/                             # Create this folder for README media
-    ├── images/
-    └── media/
+└── docs/                             # Captured visual documentation
+    ├── images/                         # Screenshots + kinematics schematic
+    └── media/                          # Animated demonstrations (.gif)
 ```
 
 The uploaded V2 project also includes IntelliJ project metadata and precompiled `.class` files under `out/`. Those files are **not needed** to build from source and are best left out of version control when maintaining the repository.
@@ -374,30 +351,29 @@ The uploaded V2 project also includes IntelliJ project metadata and precompiled 
 - **CSV caution:** Validate the joint-3 velocity columns and sampling assumptions before using logs in experiments.
 - **No automated test suite included:** Both versions were verified to compile under OpenJDK 21; controller accuracy and full GUI behavior were not benchmarked as part of preparing this README.
 
-## Suggested images to add
+## Included screenshots, diagram and GIFs
 
-Create the following folders **at repository root**, alongside `Robot_V1` and `Robot_V2`:
+The media in this README is **already included** in the repository-ready `docs/` folder. All interface screenshots and animations were captured from the running Java Swing applications, using their real robot assets and controllers. The kinematics diagram is a clean schematic derived from the same three-link planar model.
 
-```text
-docs/images/
-docs/media/
-```
+| Asset | Description |
+|---|---|
+| `docs/media/v2-overview.gif` | V2 live circular-path tracking (animated screenshot) |
+| `docs/media/manual-motion.gif` | V2 manual joint adjustment using the actual GUI button handlers |
+| `docs/images/v1-simulator.png` | V1 line tracking and live telemetry |
+| `docs/images/v2-simulator.png` | V2 circular tracking and live telemetry |
+| `docs/images/configuration.png` | Both robot-configuration stages, side by side |
+| `docs/images/line-vs-circle.png` | Line and circular trajectory screenshots compared |
+| `docs/images/manual-controls.png` | V2 manual buttons, keyboard shortcuts and drag panel |
+| `docs/images/rl-training.png` | Actual RL training progress dialog |
+| `docs/images/reachability-error.png` | Actual reachability diagnostic for an unreachable line |
+| `docs/images/robot-kinematics.png` | Labeled three-link kinematics schematic |
+| `docs/images/v1-vs-v2.png` | Extra cross-version screenshot comparison |
+| `docs/images/v2-line.png`, `v2-circle.png` | Individual V2 trajectory examples |
+| `docs/images/circle-configuration.png` | Extra circle-parameter configuration screenshot |
 
-| Priority | File | What to show | Where it belongs |
-|---|---|---|---|
-| **Essential** | `docs/media/v2-overview.gif` | 10–20 seconds of V2 path tracking | Top of README |
-| **Essential** | `docs/images/v1-simulator.png` | V1 simulator + tables | Screenshots and demo |
-| **Essential** | `docs/images/v2-simulator.png` | V2 simulator + trail | Screenshots and demo |
-| **Essential** | `docs/images/configuration.png` | Robot and path configuration steps | Screenshots and demo |
-| **Recommended** | `docs/images/manual-controls.png` | V2 keyboard hints, drag panel, joint buttons | How to use |
-| **Recommended** | `docs/images/line-vs-circle.png` | Side-by-side examples of each path | How to use |
-| **Recommended** | `docs/images/robot-kinematics.png` | Labeled link and joint geometry | Mathematical model |
-| **Optional** | `docs/images/rl-training.png` | RL training dialog | RL controller |
-| **Optional** | `docs/images/reachability-error.png` | Unreachable-path diagnostic | Reachability checking |
+**To publish:** Copy the complete `docs/` directory to the repository root alongside this `README.md` and the two version folders. Do not relocate or rename its subfolders without updating the Markdown paths.
 
-**How to enable each image:** Once you add the file, locate its **📸 Add** note above and replace the note with the Markdown image line shown in the adjacent HTML comment. These placeholders are intentional so the README never displays broken image links before screenshots exist.
-
-**Screenshot tip:** Use the same window size, arm configuration, and light background for consistent documentation. If you later compare controller performance, add graphs **only after measuring them**; do not use screenshots as evidence of accuracy or speed without actual metrics.
+**Capture notes:** The screenshots show reproducible application views under a desktop display using OpenJDK 21. They are visual demonstrations, **not benchmark measurements** of trajectory-tracking error or RL training quality.
 
 ## Future improvements
 
