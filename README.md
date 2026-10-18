@@ -178,8 +178,6 @@ For an automatic mode, press **Next**, choose **Line** or **Circle**, enter its 
 
 Each V2 manual button/key press changes the corresponding angle by **0.05 radians** (about 2.86°), subject to the configured joint limits.
 
-![V2 manual joint controls and end-effector dragging area](docs/images/manual-controls.png)
-
 ![Real manual-mode motion produced with the V2 joint-control buttons](docs/media/manual-motion.gif)
 
 **Automatic modes:** The robot attempts to reach the starting point and then advance along the selected path. The orange curve/line represents the target; the colored trail shows where the end effector actually traveled. Trajectory advancement depends on reaching a controller-specific distance threshold, so a difficult configuration may move slowly or stall.
@@ -294,7 +292,6 @@ The CSV writer records a new row approximately **every 3 seconds**. Recorded val
 
 The repository already contains one example recording: [`Robot_V2/robot_data_20260713_222537.csv`](Robot_V2/robot_data_20260713_222537.csv).
 
-**Data caution:** In the current `ControlPanel.java` CSV-writing code, the fields labeled `J3_Vx` and `J3_Vy` are populated with an end-effector velocity estimate rather than a separately computed joint-3 velocity. Review that mapping before using those two columns for quantitative analysis. Logged velocities are also numerical estimates based on sample intervals, not measurements from physical sensors.
 
 ## Project structure
 
@@ -378,12 +375,6 @@ The media in this README is **already included** in the repository-ready `docs/`
 ## Future improvements
 
 Possible next steps include automated tracking-error benchmarks across controllers, persisted RL policies, visible training progress, controller-parameter controls in the UI, stronger inverse-kinematics and reachability validation, improved CSV export, unit tests, and a physically grounded torque-level dynamics model.
-
----
-
-## License
-
-No `LICENSE` file was included in the supplied project versions. If this repository will be public, add a license that reflects how you want others to use and modify the work. Do not assume a license is granted solely because the code is visible on GitHub.
 
 ---
 
