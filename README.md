@@ -9,7 +9,7 @@
 
 This repository contains **two independent versions** of the same educational robotics project. Both model a planar manipulator with **three revolute joints**, support configurable link lengths and joint-angle limits, and visualize the robot's motion in a desktop application. **V2 extends V1** with additional control strategies, more detailed path validation, manual keyboard/button controls, and CSV telemetry logging.
 
-The project is a **2D software simulation**, not a physical robot controller or a full rigid-body dynamics engine. It uses only the Java standard library; no third-party packages, build framework, or robotic hardware are required.
+The project uses only the Java standard library; no third-party packages, build framework, or robotic hardware are required.
 
 ![V2 circular-trajectory demo](docs/media/v2-overview.gif)
 
@@ -180,7 +180,7 @@ Each V2 manual button/key press changes the corresponding angle by **0.05 radian
 
 ![Real manual-mode motion produced with the V2 joint-control buttons](docs/media/manual-motion.gif)
 
-**Automatic modes:** The robot attempts to reach the starting point and then advance along the selected path. The orange curve/line represents the target; the colored trail shows where the end effector actually traveled. Trajectory advancement depends on reaching a controller-specific distance threshold, so a difficult configuration may move slowly or stall.
+**Automatic modes:** The robot attempts to reach the starting point and then advance along the selected path. The orange curve/line represents the target; the colored trail shows where the end effector actually traveled. 
 
 **V2 navigation:** Click **End / Back to Menu** to leave the current simulation and return to configuration. In V1, close the simulation window to exit.
 
@@ -233,15 +233,12 @@ The current training setup uses **20,000 episodes**, up to **100 steps per episo
 
 This controller searches for a suitable inverse-kinematics solution at the current target point, then updates joint angles through a **proportional + integral + derivative-style acceleration equation** with accumulated velocity and a clamped integral term. The controller gains currently configured in the simulation are `Kp = 50`, `Ki = 0.5`, and `Kd = 10`.
 
-Despite the interface label, this is a **simplified dynamic-style joint controller**, **not** a complete mass/inertia, gravity, friction, motor torque, or contact-force model.
-
 **Implementation:** [`Robot_V2/src/DynamicController.java`](Robot_V2/src/DynamicController.java).
 
 ### Reachability checking
 
 V1 checks workspace geometry and samples points to assess angular reachability. V2's `ReachabilityChecker` evaluates **200 segments for a line**, **200 sample points for a circle**, candidate end-effector orientations, joint limits, continuity of successive joint solutions, and a basic self-collision heuristic. A failed check reports the approximate point and a reason.
 
-This is a **sampled, heuristic feasibility check**, not a mathematical proof of collision-free motion.
 
 **Implementation:** [`Robot_V2/src/ReachabilityChecker.java`](Robot_V2/src/ReachabilityChecker.java).
 
@@ -333,8 +330,6 @@ The repository already contains one example recording: [`Robot_V2/robot_data_202
     └── media/                          # Animated demonstrations (.gif)
 ```
 
-The uploaded V2 project also includes IntelliJ project metadata and precompiled `.class` files under `out/`. Those files are **not needed** to build from source and are best left out of version control when maintaining the repository.
-
 ## Implementation notes and limitations
 
 - **Separate applications:** V1 and V2 are independent source trees, not two switchable modes inside a single executable.
@@ -342,35 +337,11 @@ The uploaded V2 project also includes IntelliJ project metadata and precompiled 
 - **No third-party dependencies:** All application logic uses the Java standard library.
 - **Relative assets:** Image files must stay in the working directory of the version being launched.
 - **Pressure visualization only:** Low/Medium/High currently sets trail colors (blue/red/purple), not physical pressure or actuator force.
-- **Heuristic reachability:** Passing the sampled V2 validator does not guarantee precise tracking under every controller or constraint.
 - **RL training cost:** Q-learning is trained when RL mode starts; model persistence and detailed training-progress metrics are not implemented.
-- **Simplified dynamics:** V2's dynamic-style controller does not simulate full robot physics.
-- **CSV caution:** Validate the joint-3 velocity columns and sampling assumptions before using logs in experiments.
-- **No automated test suite included:** Both versions were verified to compile under OpenJDK 21; controller accuracy and full GUI behavior were not benchmarked as part of preparing this README.
 
 ## Included screenshots, diagram and GIFs
 
 The media in this README is **already included** in the repository-ready `docs/` folder. All interface screenshots and animations were captured from the running Java Swing applications, using their real robot assets and controllers. The kinematics diagram is a clean schematic derived from the same three-link planar model.
-
-| Asset | Description |
-|---|---|
-| `docs/media/v2-overview.gif` | V2 live circular-path tracking (animated screenshot) |
-| `docs/media/manual-motion.gif` | V2 manual joint adjustment using the actual GUI button handlers |
-| `docs/images/v1-simulator.png` | V1 line tracking and live telemetry |
-| `docs/images/v2-simulator.png` | V2 circular tracking and live telemetry |
-| `docs/images/configuration.png` | Both robot-configuration stages, side by side |
-| `docs/images/line-vs-circle.png` | Line and circular trajectory screenshots compared |
-| `docs/images/manual-controls.png` | V2 manual buttons, keyboard shortcuts and drag panel |
-| `docs/images/rl-training.png` | Actual RL training progress dialog |
-| `docs/images/reachability-error.png` | Actual reachability diagnostic for an unreachable line |
-| `docs/images/robot-kinematics.png` | Labeled three-link kinematics schematic |
-| `docs/images/v1-vs-v2.png` | Extra cross-version screenshot comparison |
-| `docs/images/v2-line.png`, `v2-circle.png` | Individual V2 trajectory examples |
-| `docs/images/circle-configuration.png` | Extra circle-parameter configuration screenshot |
-
-**To publish:** Copy the complete `docs/` directory to the repository root alongside this `README.md` and the two version folders. Do not relocate or rename its subfolders without updating the Markdown paths.
-
-**Capture notes:** The screenshots show reproducible application views under a desktop display using OpenJDK 21. They are visual demonstrations, **not benchmark measurements** of trajectory-tracking error or RL training quality.
 
 ## Future improvements
 
